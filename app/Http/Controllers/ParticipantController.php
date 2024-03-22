@@ -13,7 +13,7 @@ class ParticipantController extends Controller
 
     // Create Participant
     public function create(User $user, Conference $conference){
-        return view('participants\create',['user'=>$user, 'conference'=>$conference]);
+        return view('participants.create',['user'=>$user, 'conference'=>$conference]);
     }
 
     // Store Participant
