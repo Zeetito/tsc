@@ -70,7 +70,7 @@
 
                                     <div class="col-12 mb-3">
                                         <strong>Email</strong>
-                                        <input type="email" value="{{old('email',$participant->email)}}" name="email" class="form-control" required>
+                                        <input type="email" value="{{old('email',$participant->email)}}" name="email" class="form-control" >
                                         
                                     </div>
                                     @error('email')

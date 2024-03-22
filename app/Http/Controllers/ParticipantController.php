@@ -22,7 +22,7 @@ class ParticipantController extends Controller
             'name'=>['required','min:5'],
             'active_contact'=>['required','min:10'],
             'other_contact'=>['nullable','min:10'],
-            'email'=>['email'],
+            'email'=>['email','nullable'],
             'gender'=>['required'],
             'amount'=>['numeric'],
             'paid'=>['numeric','required'],
@@ -75,7 +75,7 @@ class ParticipantController extends Controller
             'active_contact'=>['required','min:10'],
             'other_contact'=>['nullable','min:10'],
             'gender'=>['required'],
-            'email'=>['email'],
+            'email'=>['email','nullable'],
             'amount'=>['numeric'],
             'paid'=>['numeric','required'],
         ]);
