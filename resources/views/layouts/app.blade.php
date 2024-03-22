@@ -107,7 +107,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+            </div>
             
 
              {{-- Success --}}
@@ -137,6 +137,7 @@
          @endif
 
             @yield('content')
+
         </main>
     </div>
 </body>

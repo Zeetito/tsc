@@ -10,9 +10,9 @@
                     <div class="row">
                         {{-- If the User is the Campus --}}
                         @if(auth()->user()->is($user))
-                        <a class="btn btn-danger col-3 m-2 " href="{{route('confirm_exit_conference',['user'=>$user,'conference'=>$conference])}}" >
+                        {{-- <a class="btn btn-danger col-3 m-2 " href="{{route('confirm_exit_conference',['user'=>$user,'conference'=>$conference])}}" >
                             Exit Conference
-                        </a>
+                        </a> --}}
 
                         {{-- @if($conferenceUser->paid != null) --}}
                         <a class="btn btn-info text-white col-3 m-2 " href="{{route('create_participant',['user'=>$user,'conference'=>$conference])}}" >
