@@ -10,20 +10,20 @@
                     <div class="row">
                         {{-- If the User is the Campus --}}
                         @if(auth()->user()->is($user))
-                        {{-- <a class="btn btn-danger col-3 m-2 " href="{{route('confirm_exit_conference',['user'=>$user,'conference'=>$conference])}}" >
-                            Exit Conference
-                        </a> --}}
+                            {{-- <a class="btn btn-danger col-3 m-2 " href="{{route('confirm_exit_conference',['user'=>$user,'conference'=>$conference])}}" >
+                                Exit Conference
+                            </a> --}}
 
-                        {{-- @if($conferenceUser->paid != null) --}}
-                        <a class="btn btn-info text-white col-3 m-2 " href="{{route('create_participant',['user'=>$user,'conference'=>$conference])}}" >
-                            Add Participant
-                        </a>
+                            @if($conferenceUser)
+                                <a class="btn btn-info text-white col-3 m-2 " href="{{route('create_participant',['user'=>$user,'conference'=>$conference])}}" >
+                                    Add Participant
+                                </a>
 
-                        {{-- Speicial Participants --}}
-                        <a class="btn btn-info text-white col-3 m-2 " href="{{route('create_special_participant',['user'=>$user,'conference'=>$conference])}}" >
-                            Indicate Special Participants
-                        </a>
-                        {{-- @endif --}}
+                                {{-- Speicial Participants --}}
+                                <a class="btn btn-info text-white col-3 m-2 " href="{{route('create_special_participant',['user'=>$user,'conference'=>$conference])}}" >
+                                    Indicate Special Participants
+                                </a>
+                            @endif
 
                         @endif
 
@@ -31,6 +31,7 @@
                         <a class="btn btn-info text-white mr-2 col-3 m-2 " href="{{route('show_conference',['conference'=>$conference])}}" >
                             Back To {{$conference->name}}
                         </a>
+
                     </div>
                   
                    
@@ -46,7 +47,7 @@
 
                 <div class="card-body">
 
-                    @if(($conferenceUser->paid == NULL))
+                    @if((!$conferenceUser || $conferenceUser->paid == NULL))
 
                             @if(auth()->user()->is($user))
 

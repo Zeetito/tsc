@@ -109,7 +109,7 @@ Route::get('/', function () {
 
     // Show Conference
     Route::get('show_conference/{conference}',[ConferenceController::class,'show'])
-    ->middleware('auth','paid_status')
+    ->middleware('auth')
     ->name('show_conference');
 
     // Join Business
