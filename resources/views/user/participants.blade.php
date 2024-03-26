@@ -46,7 +46,7 @@
 
                 <div class="card-body">
 
-                    @if(($conferenceUser->paid === NULL))
+                    @if(($conferenceUser->paid == NULL))
 
                             @if(auth()->user()->is($user))
 

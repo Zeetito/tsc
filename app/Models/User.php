@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Conference;
+use App\Models\ConferenceUser;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -80,6 +81,11 @@ class User extends Authenticatable
     // Check if user is part of a conference
     public function is_part_of(Conference $conference){
         return $conference->users->contains($this);
+    }
+
+    // Check if user has stated their paid status for a confrerence
+    public function paid_status_set_for(Conference $conference){
+        return ConferenceUser::where('user_id',$this->id)->where('conference_id',$conference->id)->first()->paid != NULL;
     }
 
 

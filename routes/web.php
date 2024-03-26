@@ -27,8 +27,10 @@ Route::get('/', function () {
 });
 
     Route::get('/hello', function () {
-        return Participant::find(1)->is_special(Conference::find(1));
-        return Conference::find(1)->special_participants;
+
+        $conference = Conference::active_conference();
+        return (auth()->user()->paid_status_set_for($conference));
+        
         // return User::find(1)->participants_for(Conference::find(1));
 
         $conferenceUser = ConferenceUser::where('user_id',2)->where('conference_id',1)->first();
@@ -61,32 +63,32 @@ Route::get('/', function () {
 
     // Create Participants
     Route::get('create_participant/{user}/{conference}',[ParticipantController::class,'create'])
-    ->middleware('auth')
+    ->middleware('auth','paid_status')
     ->name('create_participant');
     
     // Store Participants
     Route::post('store_participant/{user}/{conference}',[ParticipantController::class,'store'])
-    ->middleware('auth')
+    ->middleware('auth','paid_status')
     ->name('store_participant');
 
     // Confirm Delete
     Route::get('confirm_participant_delete/{participant}',[ParticipantController::class,'confirm_delete'])
-    ->middleware('auth')
+    ->middleware('auth','paid_status')
     ->name('confirm_participant_delete');
 
     // Store Participants
     Route::delete('delete_participant/{participant}',[ParticipantController::class,'delete'])
-    ->middleware('auth')
+    ->middleware('auth','paid_status')
     ->name('delete_participant');
 
     // Edit Participant
     Route::get('edit_participant/{participant}',[ParticipantController::class,'edit'])
-    ->middleware('auth')
+    ->middleware('auth','paid_status')
     ->name('edit_participant');
 
     // Update Participant
     Route::put('update_participant/{participant}',[ParticipantController::class,'update'])
-    ->middleware('auth')
+    ->middleware('auth','paid_status')
     ->name('update_participant');
 
 
@@ -107,7 +109,7 @@ Route::get('/', function () {
 
     // Show Conference
     Route::get('show_conference/{conference}',[ConferenceController::class,'show'])
-    ->middleware('auth')
+    ->middleware('auth','paid_status')
     ->name('show_conference');
 
     // Join Business
@@ -117,7 +119,7 @@ Route::get('/', function () {
 
     // View All Participants for all conference
     Route::get('conference_participants/{conference}',[ConferenceController::class,'participants'])
-    ->middleware('auth')
+    ->middleware('auth','paid_status')
     ->name('conference_participants');
 
 
