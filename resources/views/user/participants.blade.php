@@ -25,9 +25,9 @@
                                 </a>
 
                                 {{-- Update Participants' residence --}}
-                                {{-- <a class="btn btn-secondary text-white md-col-6 m-2 " href="{{route('edit_bulk_participant_residence',['user'=>$user,'conference'=>$conference])}}" >
+                                <a class="btn btn-secondary text-white md-col-6 m-2 " href="{{route('edit_bulk_participant_residence',['user'=>$user,'conference'=>$conference])}}" >
                                     Update Participant's residence
-                                </a> --}}
+                                </a>
                             @endif
 
                         @endif

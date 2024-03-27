@@ -119,7 +119,7 @@
 
                                                     <td>
                                                         @if($participant->is_special($conference))
-                                                            <a href="{{route('confirm_special_participant_delete',['specialParticipant'=>$participant])}}">Delete</a>
+                                                            <a href="{{route('confirm_special_participant_delete',['specialParticipant'=>$participant->special_instance($conference)])}}">Delete</a>
                                                         @else
                                                             {{""}}
                                                         @endif

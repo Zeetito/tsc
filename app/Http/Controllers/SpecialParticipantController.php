@@ -40,8 +40,8 @@ class SpecialParticipantController extends Controller
             ]);
 
             $participants = array_map('intval',$validated_participants['participants']);
-            $categories = (array_filter($validated_participants['categories']));
-            $info = (array_filter($validated_participants['info']));
+            $categories = array_values(array_filter($validated_participants['categories']));
+            $info = array_values(array_filter($validated_participants['info']));
 
 
             $db_special_participants =  $conference->special_participants_for($user);
