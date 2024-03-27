@@ -22,7 +22,7 @@
                 
                     @if($participants->count() > 0)
 
-                        <div>
+                        <div class="table-responsive">
 
                             <table class="table table-striped datatable">
                                 <caption class="h2">

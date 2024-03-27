@@ -10,6 +10,20 @@ class SpecialParticipant extends Model
 {
     use HasFactory;
 
+    protected $defaultOrderBy = 'created_at'; // Default column to sort by
+    protected $defaultOrderDirection = 'desc'; // Default sorting direction ('asc' or 'desc')
+
+    public function newQuery($excludeDeleted = true)
+    {
+        $query = parent::newQuery($excludeDeleted);
+
+        if (!empty($this->defaultOrderBy)) {
+            $query->orderBy($this->defaultOrderBy, $this->defaultOrderDirection);
+        }
+
+        return $query;
+    }
+
     protected $fillable = [
         'participant_id',
         'category',

@@ -45,10 +45,18 @@ class Conference extends Model
     public function special_participants(){
         return $this->hasManyThrough(SpecialParticipant::class,Participant::class);
     }
-
-
-    // FUNCTIONS
     
+
+    
+    // Special participants for a user
+    public function special_participants_for(User $user){
+        return $this->special_participants()
+            ->whereHas('participant', function ($query) {
+                $query->whereIn('user_id',$this->users->pluck('id'));
+            })->where('amount','>=',$user->amount_for($this))
+        
+        ->get();
+    }
 
 
 

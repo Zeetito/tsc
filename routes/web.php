@@ -4,6 +4,7 @@ use App\Models\User;
 use App\Models\Conference;
 use App\Models\Participant;
 use App\Models\ConferenceUser;
+use App\Models\SpecialParticipant;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ConferenceController;
@@ -28,14 +29,18 @@ Route::get('/', function () {
 
     Route::get('/hello', function () {
 
-        $conference = Conference::active_conference();
-        return (auth()->user()->paid_status_set_for($conference));
+        
+        // // $conference = Conference::active_conference();
+        // $participants = SpecialParticipant::select('participant_id')->groupBy('participant_id')->havingRaw('COUNT(*) > 1')->get();
+        // // return (auth()->user()->paid_status_set_for($conference));
+        // return $participants;
         
         // return User::find(1)->participants_for(Conference::find(1));
 
         $conferenceUser = ConferenceUser::where('user_id',2)->where('conference_id',1)->first();
         // return $conferenceUser;
         $conference = Conference::find(1);
+        return $conference->special_participants_for(User::find(1));
         return Participant::whereBelongsTo($conference)->where('participants.paid',1)->where('participants.amount','>=',$conferenceUser->amount)->get()->intersect($conference->user->participants);
 
     });
@@ -57,6 +62,15 @@ Route::get('/', function () {
     ->middleware('auth')
     ->name('store_special_participant');
 
+    // Confirm Delete
+    Route::get('confirm_special_participant_delete/{specialParticipant}',[SpecialParticipantController::class,'confirm_delete'])
+    ->middleware('auth')
+    ->name('confirm_special_participant_delete');
+
+    // Delete
+    Route::delete('delete_special_participant/{specialParticipant}',[SpecialParticipantController::class,'delete'])
+    ->middleware('auth')
+    ->name('delete_special_participant');
 
 
 // PARTICIPANTS
@@ -90,6 +104,11 @@ Route::get('/', function () {
     Route::put('update_participant/{participant}',[ParticipantController::class,'update'])
     ->middleware('auth','paid_status')
     ->name('update_participant');
+
+    // Update Bulk participants residence
+    Route::get('edit_bulk_participant_residence/{user}/{conference}',[ParticipantController::class,'bulk_residence_edit'])
+    ->middleware('auth','paid_status')
+    ->name('edit_bulk_participant_residence');
 
 
 

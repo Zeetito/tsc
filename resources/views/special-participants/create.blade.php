@@ -11,23 +11,28 @@
 
                         <div>
 
-                                <a href="{{route('user_participants',['user'=>$user,'conference'=>$conference])}}" class="float-end">
+                                <a href="{{route('user_participants',['user'=>$user,'conference'=>$conference])}}" class="">
                                     Back - {{$conference->name}}
                                 </a>
 
-                                <div class="">
+                                <div class="table-responsive">
                                     <form action="{{route('store_special_participant',['user'=>$user,'conference'=>$conference])}}" id="special_input" method="post">
                                         @csrf
-                                    <table class="table datatable table-striped">
+                                    <table class="table datatable table-striped ">
                                         <thead>
                                             <th>Name</th>
                                             <th>Gender</th>
                                             <th>Select</th>
                                             <th>Category</th>
                                             <th>Info</th>
+                                            <th>Action(s)</th>
                                         </thead>
 
                                         <tbody>
+
+                                            @php
+                                                $index = 1; // Define the initial value for $index
+                                            @endphp
 
                                                 @foreach($user->paid_participants_for($conference) as $index => $participant)
                                                 <tr>
@@ -44,6 +49,11 @@
                                                             <input type="checkbox"  name="participants[]"value="{{$participant->id}}" {{ in_array($participant->id, old('participants', [])) ? 'checked' : '' }}>
                                                         </td>
                                                     @endif
+                                                    @error('participants.' . $index + 1)
+                                                        <span class="m=0 small alert alert-danger shadow-sm">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
 
 
 
@@ -64,12 +74,19 @@
                                                     <td>
                                                        <select name="categories[]" >
                                                         <option value="">Select</option>
-                                                        <option value="food" {{ old('categories.' . $index) == 'food' ? 'selected' : '' }}>Food</option>
-                                                        <option value="disability" {{ old('categories.' . $index) == 'disability' ? 'selected' : '' }}>Disability</option>
-                                                        <option value="allergy" {{ old('categories.' . $index) == 'allergy' ? 'selected' : '' }}>Allergy</option>
+                                                        <option value="food" {{ old('categories.' . $index + 1) == 'food' ? 'selected' : '' }}>Food</option>
+                                                        <option value="disability" {{ old('categories.' . $index + 1) == 'disability' ? 'selected' : '' }}>Disability</option>
+                                                        <option value="allergy" {{ old('categories.' . $index + 1) == 'allergy' ? 'selected' : '' }}>Allergy</option>
                                                        </select>
+                                                       
                                                     </td>
                                                     @endif
+
+                                                    @error('categories.' . $index + 1)
+                                                        <span class="m=0 small alert alert-danger shadow-sm">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
 
 
                                                     {{-- Category ends --}}
@@ -84,13 +101,31 @@
                                                         @else
                                                         <td>
                                                             <textarea type="text"  name="info[]">
-                                                                {{ old('info.' . $index) }}
+                                                                {{ old('info.' . $index + 1) }}
                                                             </textarea>
                                                         </td>
                                                         @endif
 
+                                                        @error('info.' . $index + 1)
+                                                            <span class="m=0 small alert alert-danger shadow-sm">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+
 
                                                     {{-- info Ends --}}
+
+                                                    {{-- Actions --}}
+
+                                                    <td>
+                                                        @if($participant->is_special($conference))
+                                                            <a href="{{route('confirm_special_participant_delete',['specialParticipant'=>$participant])}}">Delete</a>
+                                                        @else
+                                                            {{""}}
+                                                        @endif
+                                                    </td>
+                                            
+                                                    {{-- Actions End here --}}
 
                                                 </tr>
                                                 @endforeach

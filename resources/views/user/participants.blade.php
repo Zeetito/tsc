@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="p-3">
-    <div class="row justify-content-center">
+    <div class=" justify-content-center">
         {{-- <div class="col-md-8"> --}}
             <div class="card">
                 <div class="card-header">{{$conference->name}} @ {{$user->name}}
@@ -15,20 +15,25 @@
                             </a> --}}
 
                             @if($conferenceUser)
-                                <a class="btn btn-info text-white col-3 m-2 " href="{{route('create_participant',['user'=>$user,'conference'=>$conference])}}" >
+                                <a class="btn btn-info text-white md-col-6 m-2 " href="{{route('create_participant',['user'=>$user,'conference'=>$conference])}}" >
                                     Add Participant
                                 </a>
 
                                 {{-- Speicial Participants --}}
-                                <a class="btn btn-info text-white col-3 m-2 " href="{{route('create_special_participant',['user'=>$user,'conference'=>$conference])}}" >
+                                <a class="btn btn-info text-white md-col-6 m-2 " href="{{route('create_special_participant',['user'=>$user,'conference'=>$conference])}}" >
                                     Indicate Special Participants
                                 </a>
+
+                                {{-- Update Participants' residence --}}
+                                {{-- <a class="btn btn-secondary text-white md-col-6 m-2 " href="{{route('edit_bulk_participant_residence',['user'=>$user,'conference'=>$conference])}}" >
+                                    Update Participant's residence
+                                </a> --}}
                             @endif
 
                         @endif
 
                         
-                        <a class="btn btn-info text-white mr-2 col-3 m-2 " href="{{route('show_conference',['conference'=>$conference])}}" >
+                        <a class="btn btn-info text-white mr-2 md-col-6 m-2 " href="{{route('show_conference',['conference'=>$conference])}}" >
                             Back To {{$conference->name}}
                         </a>
 
@@ -105,9 +110,9 @@
                 
                         @if($participants->count() > 0)
 
-                            <div>
+                            <div class="table-responsive">
 
-                                <table class="table table-striped datatable">
+                                <table class="table table-striped datatable ">
                                     <caption class="h2">
                                         Participants From {{$user->name}}
                                     </caption>
@@ -116,8 +121,10 @@
                                             <th>Name</th>
                                             <th>Gender</th>
                                             <th>Active Contact</th>
-                                            <th>Other Contact</th>
-                                            <th>Email</th>    
+                                            <th>Residence</th>
+                                            <th>Room</th>
+                                            {{-- <th>Other Contact</th> --}}
+                                            {{-- <th>Email</th>     --}}
                                             @if(auth()->user()->is($user)) 
                                             
                                                 @if($conferenceUser->paid == 1)
@@ -145,15 +152,21 @@
                                                     {{$participant->active_contact}}
                                                 </td>
                                                 <td>
-                                                    {{$participant->other_contact ? $participant->other_contact : "None"}}
+                                                    {{$participant->residence != NULL ? $participant->residence : "None"}}
                                                 </td>
                                                 <td>
-                                                    {{$participant->email}}
+                                                    {{$participant->room != NULL ? $participant->room : "None"}}
                                                 </td>
+                                                {{-- <td>
+                                                    {{$participant->other_contact ? $participant->other_contact : "None"}}
+                                                </td> --}}
+                                                {{-- <td>
+                                                    {{$participant->email}}
+                                                </td> --}}
                                                 @if(auth()->user()->is($user)) 
 
                                                     @if($conferenceUser->paid == 1)
-                                                        <td>{{$participant->paid == 1 ? "Yes":"No"}}</td>    
+                                                        <td>{{$participant->paid_status()}}</td>    
                                                         <td>{{$participant->amount }}</td>    
 
                                                     @endif
@@ -183,15 +196,21 @@
                                                         {{$participant->active_contact}}
                                                     </td>
                                                     <td>
+                                                        {{$participant->residence != NULL ? $participant->residence : "None"}}
+                                                    </td>
+                                                    <td>
+                                                        {{$participant->room != NULL ? $participant->room : "None"}}
+                                                    </td>
+                                                    {{-- <td>
                                                         {{$participant->other_contact ? $participant->other_contact : "None"}}
                                                     </td>
                                                     <td>
                                                         {{$participant->email}}
-                                                    </td>
+                                                    </td> --}}
                                                     @if(auth()->user()->is($user)) 
 
                                                         @if($conferenceUser->paid == 1)
-                                                             <td class="text-danger">{{$participant->paid == 1 && $participant->amount >= $conferenceUser->amount ? "Yes":($participant->paid == 1 && $participant->amount > 0 ? "Part" : "No" )}}</td>    
+                                                             <td class="text-danger">{{$participant->paid_status()}}</td>    
                                                              <td class="text-danger" >{{$participant->amount }}</td>    
 
                                                         @endif

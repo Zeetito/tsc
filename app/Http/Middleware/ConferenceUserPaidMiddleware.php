@@ -20,7 +20,7 @@ class ConferenceUserPaidMiddleware
         if(auth()->user()->paid_status_set_for($conference)){
             return $next($request);
         }else{
-            return redirect(route('user_participants',['user'=>auth()->user(),'conference'=>$conference]))->with('warning','Please Clarify this before.');
+            return redirect(route('user_participants',['user'=>auth()->user(),'conference'=>$conference]))->with('warning','Please Clarify this first!.');
         }
     }
 }

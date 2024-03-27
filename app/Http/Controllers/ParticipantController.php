@@ -92,4 +92,9 @@ class ParticipantController extends Controller
 
 
     }
+
+    // bulk_residence_edit
+    public function bulk_residence_edit(User $user, Conference $conference){
+        return view('participants.update-residence',['user'=>$user, 'conference'=>$conference]);
+    }
 }

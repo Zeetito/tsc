@@ -73,6 +73,11 @@ class User extends Authenticatable
 
     // FUNCTIONS
 
+    // Return the amount a user has for a conference
+    public function amount_for(Conference $conference){
+        return ConferenceUser::where('user_id',$this->id)->where('conference_id',$conference->id)->first()->amount;
+    }
+
     // Check if user is current host
     public function is_host(){
         return $this->is_host == 1;
