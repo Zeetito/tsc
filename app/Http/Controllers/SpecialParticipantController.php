@@ -81,7 +81,7 @@ class SpecialParticipantController extends Controller
             }
 
         }else{
-            return redirect()->back()->with('failure','Please Select A Participant');
+            return redirect()->back()->with('failure','Please Select A Participant. Please Select a participant.');
         }
     }
 
