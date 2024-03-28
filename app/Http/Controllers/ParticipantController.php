@@ -119,12 +119,12 @@ class ParticipantController extends Controller
 
              // Check if what's there is same as what's coming
              if($db_residences == $residences && $db_rooms == $rooms && $db_participants == $participants){
-                return ( [$db_residences, $residences, $db_rooms, $rooms, $db_participants, $participants]);
+                // return ( [$db_residences, $residences, $db_rooms, $rooms, $db_participants, $participants]);
 
                 return redirect()->back()->with('warning','no change detected');
             }
 
-            else{return ( [$db_residences, $residences, $db_rooms, $rooms, $db_participants, $participants]);}
+            // else{return ( [$db_residences, $residences, $db_rooms, $rooms, $db_participants, $participants]);}
 
 
              // If there's a difference

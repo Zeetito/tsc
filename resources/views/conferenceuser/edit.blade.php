@@ -14,7 +14,7 @@
                                 @csrf
                                 @method('put')
 
-                                <a href="{{route('show_conference',['conference'=>$conference])}}" class="float-end">
+                                <a href="{{route('show_conference',['conference'=>$conference])}}" class="">
                                     Back - {{$conference->name}}
                                 </a>
 

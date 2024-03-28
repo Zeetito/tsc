@@ -34,7 +34,7 @@
                                                 @foreach($user->paid_participants_for($conference)->sortByDesc('created_at') as $index => $participant)
                                                 <tr>
                                                     
-                                                    <td>{{$participant->name}} <input type="text" value="{{$index + 1}}-{{$participant->id}}"> {{--<a href="{{route('edit_participant',['participant'=>$participant])}}">Edit</a>--}}</td>
+                                                    <td>{{$participant->name}} {{--<a href="{{route('edit_participant',['participant'=>$participant])}}">Edit</a>--}}</td>
                                                     <td>{{$participant->gender == "m" ? "Male":"Female"}}</td>
                                                     <td>{{$participant->active_contact}}</td>
                                                   
@@ -44,7 +44,7 @@
                                                         </td>
                                                     @else
                                                         <td>
-                                                            <input type="checkbox"  name="participants[]"value="{{$participant->id}}" {{ in_array($participant->id, old('participants', [])) ? 'checked' : '' }}>
+                                                            <input type="checkbox"  name="participants[]"value="{{$participant->id}}">
                                                         </td>
                                                     @endif
 
@@ -55,37 +55,35 @@
                                                 
 
                                                     {{-- Residence --}}
-                                                        {{-- @if($participant->residence != NULL) --}}
-                                                            {{-- <td>
+                                                        @if($participant->residence != NULL)
+                                                            <td>
                                                                 <textarea type="text"  name="residences[]">
                                                                     {{$participant->residence}}
                                                                 </textarea>
-                                                            </td> --}}
-                                                        {{-- @else --}}
+                                                            </td>
+                                                        @else
                                                             <td>
                                                                 <textarea type="text"  name="residences[]">
-                                                                    {{ old('residences.' . $index + 1,$participant->residence) }}
                                                                 </textarea>
                                                             </td>
-                                                        {{-- @endif --}}
+                                                        @endif
 
 
                                                     {{-- residence Ends --}}
 
                                                     {{-- Room --}}
-                                                        {{-- @if($participant->room != NULL) --}}
-                                                            {{-- <td>
+                                                        @if($participant->room != NULL)
+                                                            <td>
                                                                 <textarea type="text"  name="rooms[]">
                                                                     {{$participant->room}}
                                                                 </textarea>
-                                                            </td> --}}
-                                                        {{-- @else --}}
+                                                            </td>
+                                                        @else
                                                             <td>
                                                                 <textarea type="text"  name="rooms[]">
-                                                                    {{ old('rooms.' . $index + 1,$participant->room) }}
                                                                 </textarea>
                                                             </td>
-                                                        {{-- @endif --}}
+                                                        @endif
 
 
                                                     {{-- room Ends --}}
