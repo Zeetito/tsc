@@ -40,7 +40,7 @@
                                         </select>
                                         
                                     </div>
-                                    @error('name')
+                                    @error('gender')
                                         <span class="m=0 small alert alert-danger shadow-sm" >
                                             <strong>{{ $message }}</strong>
                                         </span>

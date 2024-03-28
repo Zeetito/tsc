@@ -37,7 +37,7 @@
                                                 @foreach($user->paid_participants_for($conference) as $index => $participant)
                                                 <tr>
                                                     
-                                                    <td>{{$participant->name}} {{--<a href="{{route('edit_participant',['participant'=>$participant])}}">Edit</a>--}}</td>
+                                                    <td>{{$participant->name}} <input type="text"> {{--<a href="{{route('edit_participant',['participant'=>$participant])}}">Edit</a>--}}</td>
                                                     <td>{{$participant->gender == "m" ? "Male":"Female"}}</td>
                                                     {{-- Select Participant --}}
                                                     @if($participant->is_special($conference))

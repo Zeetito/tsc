@@ -97,4 +97,54 @@ class ParticipantController extends Controller
     public function bulk_residence_edit(User $user, Conference $conference){
         return view('participants.update-residence',['user'=>$user, 'conference'=>$conference]);
     }
+
+    // update bulk residence
+    public function bulk_residence_update(Request $request,User $user, Conference $conference){
+        if($request->input('participants')){
+            $validated_participants = $request->validate([
+                'participants'=>['required','array'],
+                'residences'=>['required'],
+                'rooms'=>['required'],
+            ]);
+            // Storing Values from form
+            $participants = array_map('intval',$validated_participants['participants']);
+            $residences = array_values(array_filter($validated_participants['residences']));
+            $rooms = array_values(array_filter($validated_participants['rooms']));
+
+
+            // Storing Values from DB
+            $db_participants = array_values(array_filter($user->paid_participants_for($conference)->where('residence','<>',NULL)->pluck('id')->toArray()));
+            $db_residences = array_values(array_filter($user->paid_participants_for($conference)->pluck('residence')->toArray()));
+            $db_rooms = array_values(array_filter($user->paid_participants_for($conference)->pluck('room')->toArray()));
+
+             // Check if what's there is same as what's coming
+             if($db_residences == $residences && $db_rooms == $rooms && $db_participants == $participants){
+                return ( [$db_residences, $residences, $db_rooms, $rooms, $db_participants, $participants]);
+
+                return redirect()->back()->with('warning','no change detected');
+            }
+
+            else{return ( [$db_residences, $residences, $db_rooms, $rooms, $db_participants, $participants]);}
+
+
+             // If there's a difference
+             if(sizeof($residences) == sizeof($participants) && sizeof($rooms) == sizeof($participants)){
+                foreach($participants as $index => $participant){
+                    // Check if the instance exist for update instead of insert
+                        $participant_instance =  Participant::find($participant);
+                        $participant_instance->residence = $residences[$index];
+                        $participant_instance->room = $rooms[$index];
+                        $participant_instance->save();
+                }
+
+                return redirect()->back()->with('success','Participants Residence Details Updated Successfully!');
+                
+            }else{
+                return redirect()->back()->with('failure','Kindly fill in all necessary details!')->withInput();
+            }
+
+        }else{
+            return redirect()->back()->with('failure','Please Select A Participant. Please Select a participant.');
+        }
+    }
 }

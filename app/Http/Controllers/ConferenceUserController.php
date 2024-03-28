@@ -43,4 +43,30 @@ class ConferenceUserController extends Controller
             return redirect()->back()->with('warning','Select A valid response');
         }
     }
+
+
+    // Edit Conference user payment
+    public function edit(User $user, Conference $conference){
+        $conference_user = ConferenceUser::where('user_id',$user->id)->where('conference_id',$conference->id)->first();
+        return view('conferenceuser.edit',['user'=>$user,'conference'=>$conference,'conference_user'=>$conference_user]);
+    }
+
+    // UPdate
+    public function update(Request $request, ConferenceUser $conference_user){
+        if($request->input('paid') == 1 || $request->input('paid')  == 0 ){
+            if($request->input('paid') == 0){
+                $amount = 0.00;
+            }else{
+                $amount = $request->input('amount');
+            }
+            $conference_user->paid = $request->input('paid');
+            $conference_user->amount = $amount;
+            $conference_user->save();
+
+            return redirect()->back()->with('success','Update Success');
+
+        }else{
+            return redirect()->back()->with('warning','Select A valid response');
+        }
+    }
 }

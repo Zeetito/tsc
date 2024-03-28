@@ -105,10 +105,16 @@ Route::get('/', function () {
     ->middleware('auth','paid_status')
     ->name('update_participant');
 
-    // Update Bulk participants residence
+    // Edit Bulk participants residence
     Route::get('edit_bulk_participant_residence/{user}/{conference}',[ParticipantController::class,'bulk_residence_edit'])
     ->middleware('auth','paid_status')
     ->name('edit_bulk_participant_residence');
+
+    // Update Bulk residence
+    Route::put('update_bulk_participant_residence/{user}/{conference}',[ParticipantController::class,'bulk_residence_update'])
+    ->middleware('auth','paid_status')
+    ->name('update_bulk_participant_residence');
+
 
 
 
@@ -181,6 +187,16 @@ Auth::routes();
     Route::put('update_payment/{user}/{conference}',[ConferenceUserController::class,'update_payment'])
     ->middleware('auth')
     ->name('update_conference_payment');
+
+    // Edit 
+    Route::get('edit_conference_user/{user}/{conference}',[ConferenceUserController::class,'edit'])
+    ->middleware('auth')
+    ->name('edit_conference_user');
+
+    // Update
+    Route::put('update_conference_user/{conference_user}',[ConferenceUserController::class,'update'])
+    ->middleware('auth')
+    ->name('update_conference_user');
 
 
 

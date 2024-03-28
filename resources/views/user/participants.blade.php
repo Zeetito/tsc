@@ -52,7 +52,7 @@
 
                 <div class="card-body">
 
-                    @if((!$conferenceUser || $conferenceUser->paid == NULL))
+                    @if(($conferenceUser === NULL || $conferenceUser->paid === NULL))
 
                             @if(auth()->user()->is($user))
 
@@ -66,7 +66,7 @@
                                         <div class="row">
                                                 {{-- Paid --}}
                                                 <div class="col-12 mb-3">
-                                                    <strong>Participants from {{$user->name}} are supposed to make payment(eg. T&T) ?</strong>
+                                                    <strong>Are Participants from {{$user->name}} are supposed to make payment(eg. T&T) ?</strong>
                                                     <p class="text-center">NB: this payment is does not include Participation fee!</p>
                                                     <select name="paid" id="" class="form-control" required>
                                                         <option value="">Select</option>
